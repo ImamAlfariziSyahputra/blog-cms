@@ -16,22 +16,16 @@ use App\Http\Controllers\LocalizationController;
 
 Route::get(
     '/localization/{language}', 
-    LocalizationController::class
+    [LocalizationController::class, 'switchLang']
 )->name('localization.switch');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('layouts.dashboard');
-});
-
 Auth::routes([
     'register' => false,
 ]);
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
