@@ -30,5 +30,7 @@ Auth::routes([
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    // Categories
+    Route::get('/categories/select', [CategoryController::class, 'select'])->name('categories.select');
     Route::resource('/categories', CategoryController::class);
 });

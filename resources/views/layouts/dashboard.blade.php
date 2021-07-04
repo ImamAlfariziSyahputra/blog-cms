@@ -15,7 +15,8 @@
     <script src="{{ asset('vendor/fontawesome-free/js/all.min.js') }}"></script>
     <!-- icon flag -->
     <link rel="stylesheet" href="{{ asset('vendor/flag-icon-css/css/flag-icon.min.css') }}">
-
+    {{-- css external --}}
+    @stack('cssExternal')
 </head>
 
 <body>
@@ -56,6 +57,9 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- my-dashboard -->
     <script src="{{ asset('vendor/my-dashboard/js/dashboard.js') }}"></script>
+    {{-- Js External --}}
+    @stack('jsExternal')
+    @stack('jsInternal')
 </body>
 
 </html>
