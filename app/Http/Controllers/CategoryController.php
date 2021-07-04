@@ -33,6 +33,12 @@ class CategoryController extends Controller
             $categories = Category::select('id', 'title')->onlyParent()->limit(6)->get();
         }
 
+        try {
+
+        } catch(err) {
+
+        }
+
         return response()->json($categories);
     }
 
@@ -54,8 +60,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
+        // Validation
         $validator = Validator::make(
             $request->all(), 
             [
@@ -80,8 +85,30 @@ class CategoryController extends Controller
                 ->withErrors($validator);
         }
 
-        // Proses Insert Data
-        dd($request->all());
+        // *parse to remove http://localhost/
+        $parsedThumbnail = parse_url($request->thumbnail)['path'];
+
+        // Insert Data
+        try {
+            Category::create([
+                'title' => $request->title,
+                'slug' => $request->slug,
+                'thumbnail' => $parsedThumbnail,
+                'description' => $request->description,
+                'parent_id' => $request->parent_category,
+            ]);
+
+            return redirect()->route('categories.index');
+        } catch(err) {
+            if($request->has('parent_category')) {
+                $request['parent_category'] = Category::select('id', 'title')
+                    ->find($request->parent_category);
+            }
+
+            return redirect()->back()
+                ->withInput($request->all())
+                ->withErrors($validator);
+        }
 
     }
 
