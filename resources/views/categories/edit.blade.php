@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    {{ trans('categories.title.create') }}
+    {{ trans('categories.title.edit') }}
 @endsection
 
 @section('breadcrumbs')
-{{ Breadcrumbs::render('addCategory') }}
+{{ Breadcrumbs::render('editCategoryTitle', $category) }}
 @endsection
 @section('content')
 
@@ -134,7 +134,7 @@
                             {{ trans('categories.button.back.value') }}
                         </a>
                         <button type="submit" class="btn btn-primary px-4">
-                            {{ trans('categories.button.save.value') }}
+                            {{ trans('categories.button.edit.value') }}
                         </button>
                     </div>                
                 </form>

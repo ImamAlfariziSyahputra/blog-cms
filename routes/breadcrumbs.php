@@ -17,9 +17,19 @@ Breadcrumbs::for('categories', function (BreadcrumbTrail $trail) {
     $trail->push('Categories', route('categories.index'));
 });
 
-Breadcrumbs::for('addCategories', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('addCategory', function (BreadcrumbTrail $trail) {
     $trail->parent('categories');
     $trail->push('Add', route('categories.create'));
+});
+
+Breadcrumbs::for('editCategory', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('categories');
+    $trail->push('Edit', route('categories.edit', compact('category')));
+});
+
+Breadcrumbs::for('editCategoryTitle', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('editCategory', $category);
+    $trail->push($category->title, route('categories.edit', compact('category')));
 });
 
 // Home > Blog
