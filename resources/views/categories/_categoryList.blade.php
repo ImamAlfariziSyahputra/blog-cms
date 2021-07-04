@@ -23,13 +23,16 @@
             </form>
         </div>
         <!-- todo:show subcategory -->
-        @if ($category->parent)
-        @include('categories._categoryList', [
-                'categories' => $category->parent,
-                'count' => $count + 2,
-            ])
+        @if ($category->herit)
+            @include(
+                'categories._categoryList', 
+                [
+                    'categories' => $category->herit,
+                    'count' => $count + 2,
+                ]
+            )
         @else
-            wwkawalmwlamlwm
+            no data
         @endif
     </li>
 @endforeach

@@ -26,7 +26,7 @@
                         type="text" 
                         class="form-control @error('title') is-invalid @enderror" 
                         placeholder="{{ trans('categories.form.input.title.placeholder') }}" 
-                        value="{{ old('title') }}"
+                        value="{{ old('title', $category->title) }}"
                     />
                     @error('title')
                         <span class="invalid-feedback" role="alert">
@@ -46,7 +46,7 @@
                         class="form-control @error('slug') is-invalid @enderror" 
                         readonly
                         placeholder="{{ trans('categories.form.input.slug.placeholder') }}" 
-                        value="{{ old('slug') }}"
+                        value="{{ old('slug', $category->slug) }}"
                     />
                         @error('slug')
                             <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                                 class="form-control @error('thumbnail') is-invalid @enderror" 
                                 placeholder="{{ trans('categories.form.input.thumbnail.placeholder') }}"
                                 readonly 
-                                value="{{ old('thumbnail') }}"
+                                value="{{ old('thumbnail', asset($category->thumbnail)) }}"
                             />
                             @error('thumbnail')
                                 <span class="invalid-feedback" role="alert">
@@ -101,9 +101,9 @@
                             data-placeholder="{{ trans('categories.form.select.parent_category.placeholder') }}" 
                             class="custom-select w-100"
                         >
-                        @if (old('parent_category'))
-                            <option value="{{ old('parent_category')->id }}" selected>
-                                {{ old('parent_category')->title }}
+                        @if (old('parent_category', $category->parent))
+                            <option value="{{ old('parent_category', $category->parent)->id }}" selected>
+                                {{ old('parent_category', $category->parent)->title }}
                             </option>
                         @endif
                         </select>
@@ -119,7 +119,7 @@
                             class="form-control @error('description') is-invalid @enderror" 
                             rows="3"
                             placeholder="{{ trans('categories.form.textarea.description.placeholder') }}"
-                        >{{ old('description') }}</textarea>
+                        >{{ old('description', $category->description) }}</textarea>
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::onlyParent()->with('parent')->get();
+        $categories = Category::onlyParent()->with('herit')->get();
         return view('categories.index', compact('categories'));
     }
 
