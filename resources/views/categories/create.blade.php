@@ -13,7 +13,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="" method="POST">
+                <form action="{{ route('categories.store') }}" method="POST">
+                    @csrf
                     <!-- title -->
                     <div class="form-group">
                         <label for="input_category_title" class="font-weight-bold">
@@ -21,10 +22,17 @@
                         </label>
                     <input 
                         id="input_category_title" 
-                        value="" 
                         name="title" 
                         type="text" 
-                        class="form-control" placeholder="{{ trans('categories.form.input.title.placeholder') }}" />
+                        class="form-control @error('title') is-invalid @enderror" 
+                        placeholder="{{ trans('categories.form.input.title.placeholder') }}" 
+                        value="{{ old('title') }}"
+                    />
+                    @error('title')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                     </div>
                     <!-- slug -->
                     <div class="form-group">
@@ -33,37 +41,54 @@
                         </label>
                     <input 
                         id="input_category_slug" 
-                        value="" 
                         name="slug" 
                         type="text" 
-                        class="form-control" 
+                        class="form-control @error('slug') is-invalid @enderror" 
                         readonly
-                        placeholder="{{ trans('categories.form.input.slug.placeholder') }}" />
+                        placeholder="{{ trans('categories.form.input.slug.placeholder') }}" 
+                        value="{{ old('slug') }}"
+                    />
+                        @error('slug')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <!-- thumbnail -->
                     <div class="form-group">
                         <label for="input_category_thumbnail" class="font-weight-bold">
                             {{ trans('categories.form.input.thumbnail.label') }}
                         </label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button 
-                                id="button_category_thumbnail" 
-                                data-input="input_category_thumbnail" 
-                                class="btn btn-primary" 
-                                type="button"
-                            >
-                                {{ trans('categories.button.browse.value') }}
-                            </button>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button 
+                                    id="button_category_thumbnail" 
+                                    data-input="input_category_thumbnail" 
+                                    data-preview="holder"
+                                    class="btn btn-primary" 
+                                    type="button"
+                                >
+                                    {{ trans('categories.button.browse.value') }}
+                                </button>
+                            </div>
+                            <input 
+                                id="input_category_thumbnail" 
+                                name="thumbnail" 
+                                type="text" 
+                                class="form-control @error('thumbnail') is-invalid @enderror" 
+                                placeholder="{{ trans('categories.form.input.thumbnail.placeholder') }}"
+                                readonly 
+                                value="{{ old('thumbnail') }}"
+                            />
+                            @error('thumbnail')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
-                        <input 
-                            id="input_category_thumbnail" 
-                            name="thumbnail" 
-                            value="" 
-                            type="text" 
-                            class="form-control" placeholder="{{ trans('categories.form.input.thumbnail.placeholder') }}"
-                            readonly />
                     </div>
+                    {{-- preview thumbnail --}}
+                    <div id="holder">
                     </div>
                     <!-- parent_category -->
                     <div class="form-group">
@@ -76,6 +101,11 @@
                             data-placeholder="{{ trans('categories.form.select.parent_category.placeholder') }}" 
                             class="custom-select w-100"
                         >
+                        @if (old('parent_category'))
+                            <option value="{{ old('parent_category')->id }}" selected>
+                                {{ old('parent_category')->title }}
+                            </option>
+                        @endif
                         </select>
                     </div>
                     <!-- description -->
@@ -86,10 +116,15 @@
                         <textarea 
                             id="input_category_description" 
                             name="description" 
-                            class="form-control" 
+                            class="form-control @error('description') is-invalid @enderror" 
                             rows="3"
                             placeholder="{{ trans('categories.form.textarea.description.placeholder') }}"
-                        ></textarea>
+                        >{{ old('description') }}</textarea>
+                        @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="float-right">
                         <a 
@@ -118,6 +153,8 @@
 @push('jsExternal')
     <script src="{{asset('vendor/select2/js/select2.min.js') }}"></script>
     <script src="{{asset('vendor/select2/js/i18n/'. app()->getLocale() .'.js') }}"></script>
+    {{-- File Manager --}}
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
 @endpush
 
 @push('jsInternal')
@@ -167,6 +204,8 @@
                 $('#input_category_slug').val(generateSlug(title + '-' + parentCategory));
             });
 
+            // thumbnail input event
+            $('#button_category_thumbnail').filemanager('image');
         });
     </script>
 @endpush
