@@ -12,9 +12,9 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard.index'));
 });
-Breadcrumbs::for('dashboard_home', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('categories', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Home', '#');
+    $trail->push('Categories', route('categories.index'));
 });
 
 // Home > Blog
