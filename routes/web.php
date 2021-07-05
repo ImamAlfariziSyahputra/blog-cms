@@ -39,7 +39,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     Route::resource('/categories', CategoryController::class);
 
     // Tags
-    Route::resource('/tags', TagController::class);
+    Route::resource('/tags', TagController::class)->except(['show']);
 
     // File Manager
     Route::group(['prefix' => 'filemanager'], function () {
