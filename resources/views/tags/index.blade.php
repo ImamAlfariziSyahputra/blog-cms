@@ -49,7 +49,11 @@
                             </label>
                             <div>
                                 <!-- edit -->
-                                <a class="btn btn-sm btn-info" role="button">
+                                <a 
+                                    class="btn btn-sm btn-info" 
+                                    role="button"
+                                    href="{{ route('tags.edit', ['tag' => $tag]) }}"
+                                >
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <!-- delete -->
