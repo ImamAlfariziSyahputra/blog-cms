@@ -37,7 +37,7 @@
             </form>
         </div>
         <!-- todo:show subcategory -->
-        @if ($category->herit)
+        @if ($category->herit && !trim(request()->get('keyword')))
             @include(
                 'categories._categoryList', 
                 [
