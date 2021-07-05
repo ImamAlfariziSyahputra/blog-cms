@@ -16,7 +16,19 @@
                 <i class="fas fa-edit"></i>
             </a>
             <!-- delete -->
-            <form class="d-inline" action="" method="POST">
+            <form 
+                class="d-inline" 
+                role="alert" 
+                action="" 
+                method="POST"
+                alert-title="{{ trans('categories.alert.delete.title') }}"
+                alert-text="{{ trans(
+                    'categories.alert.delete.message.confirm', 
+                    ['title' => $category->title],
+                ) }}"
+                alert-btn-yes="{{ trans('categories.button.delete.value') }}"
+                alert-btn-cancel="{{ trans('categories.button.cancel.value') }}"
+            >
                 <button type="submit" class="btn btn-sm btn-danger">
                     <i class="fas fa-trash"></i>
                 </button>
