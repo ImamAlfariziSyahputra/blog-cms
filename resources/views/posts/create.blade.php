@@ -40,15 +40,27 @@
                                 </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button id="button_post_thumbnail" data-input="input_post_thumbnail"
-                                            class="btn btn-primary" type="button">
-                                            Browse
+                                        <button 
+                                            type="button"
+                                            class="btn btn-primary" 
+                                            id="button_post_thumbnail" 
+                                            data-input="input_post_thumbnail"
+                                            data-preview="holder"
+                                        >
+                                            {{ trans('posts.button.browse.value') }}
                                         </button>
                                     </div>
-                                    <input id="input_post_thumbnail" name="thumbnail" value="" type="text" class="form-control"
-                                    placeholder="" readonly />
+                                    <input 
+                                        id="input_post_thumbnail" 
+                                        name="thumbnail" 
+                                        value="" 
+                                        type="text" 
+                                        class="form-control"
+                                        placeholder="" 
+                                        readonly />
                                 </div>
                             </div>
+                            <div id="holder"></div>
                             <!-- description -->
                             <div class="form-group">
                                 <label for="input_post_description" class="font-weight-bold">
@@ -132,6 +144,11 @@
 </div>
 @endsection
 
+@push('jsExternal')
+{{-- Laravel File Manager --}}
+<script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+@endpush
+
 @push('jsInternal')
 <script>
     $(document).ready(function() {
@@ -146,6 +163,9 @@
                 .replace(/^-|-$/g, "")
             );
         });
+
+        // Event Pop-up Thumbnail with LFM
+        $("#button_post_thumbnail").filemanager('image');
     });
 </script>
 @endpush
