@@ -20,7 +20,14 @@
                 {{ trans('dashboard.link.posts') }}
             </a>
             {{-- Categories --}}
-            <a class="nav-link {{ setActive(['categories.index', 'categories.create', 'categories.edit']) }}" href="{{ route('categories.index') }}">
+            <a 
+                class="nav-link 
+                {{ setActive([
+                    'categories.index', 'categories.create', 'categories.edit', 'categories.show'
+                ]) }}
+                " 
+                href="{{ route('categories.index') }}"
+            >
                 <div class="sb-nav-link-icon">
                 <i class="fas fa-bookmark"></i>
                 </div>

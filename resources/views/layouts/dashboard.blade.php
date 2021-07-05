@@ -15,6 +15,8 @@
     <script src="{{ asset('vendor/fontawesome-free/js/all.min.js') }}"></script>
     <!-- icon flag -->
     <link rel="stylesheet" href="{{ asset('vendor/flag-icon-css/css/flag-icon.min.css') }}">
+    {{-- css internal --}}
+    @stack('cssInternal')
     {{-- css external --}}
     @stack('cssExternal')
 </head>
