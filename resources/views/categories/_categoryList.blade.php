@@ -19,7 +19,7 @@
             <form 
                 class="d-inline" 
                 role="alert" 
-                action="" 
+                action="{{ route('categories.destroy', $category) }}" 
                 method="POST"
                 alert-title="{{ trans('categories.alert.delete.title') }}"
                 alert-text="{{ trans(
@@ -29,6 +29,8 @@
                 alert-btn-yes="{{ trans('categories.button.delete.value') }}"
                 alert-btn-cancel="{{ trans('categories.button.cancel.value') }}"
             >
+                @csrf
+                @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger">
                     <i class="fas fa-trash"></i>
                 </button>

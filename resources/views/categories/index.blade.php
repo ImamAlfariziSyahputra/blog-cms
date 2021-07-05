@@ -78,7 +78,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // todo: process of deleting categories
-                    console.log('ok');
+                    event.target.submit();
                 }
             });
 
