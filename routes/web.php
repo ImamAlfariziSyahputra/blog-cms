@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -40,6 +41,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 
     // Tags
     Route::resource('/tags', TagController::class)->except(['show']);
+
+    // Posts
+    Route::resource('/posts', PostController::class);
 
     // File Manager
     Route::group(['prefix' => 'filemanager'], function () {
