@@ -37,7 +37,7 @@
             <a 
                 class="nav-link
                 {{ setActive([
-                    'categories.index',
+                    'tags.index', 'tags.create',
                 ]) }}
                 " 
                 href="{{ route('tags.index') }}"

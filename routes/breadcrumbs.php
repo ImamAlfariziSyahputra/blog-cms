@@ -53,6 +53,11 @@ Breadcrumbs::for('tags', function (BreadcrumbTrail $trail) {
     $trail->push('Tags', route('tags.index'));
 });
 
+Breadcrumbs::for('addTags', function (BreadcrumbTrail $trail) {
+    $trail->parent('tags');
+    $trail->push('Add', route('tags.create'));
+});
+
 // Home > Blog
 // Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {
 //     $trail->parent('home');
