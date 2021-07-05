@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,15 +34,17 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     
     // Categories
-    Route::get(
-        '/categories/select', 
-        [CategoryController::class, 'select']
-    )->name('categories.select');
+    Route::get('/categories/select', [CategoryController::class, 'select'])
+        ->name('categories.select');
     Route::resource('/categories', CategoryController::class);
+
+    // Tags
+    Route::resource('/tags', TagController::class);
 
     // File Manager
     Route::group(['prefix' => 'filemanager'], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
+
 });
 
