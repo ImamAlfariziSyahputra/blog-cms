@@ -45,8 +45,6 @@
                     'count' => $count + 2,
                 ]
             )
-        @else
-            no data
         @endif
     </li>
 @endforeach
