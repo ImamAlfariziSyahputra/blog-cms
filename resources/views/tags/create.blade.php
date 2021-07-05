@@ -14,24 +14,45 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="" method="POST">
+                <form action="{{ route('tags.store') }}" method="POST">
+                    @csrf
                     <!-- title -->
                     <div class="form-group">
                         <label for="input_tag_title" class="font-weight-bold">
                             {{ trans('tags.form.input.title.label') }}
                         </label>
-                        <input id="input_tag_title" value="" name="title" type="text"
-                            class="form-control"
-                            placeholder="{{ trans('tags.form.input.title.placeholder') }}" />
+                        <input 
+                            id="input_tag_title" 
+                            value="{{ old('title') }}" 
+                            name="title" 
+                            type="text"
+                            class="form-control @error('title') is-invalid @enderror"
+                            placeholder="{{ trans('tags.form.input.title.placeholder') }}" 
+                        />
+                        @error('title')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <!-- slug -->
                     <div class="form-group">
                         <label for="input_tag_slug" class="font-weight-bold">
                             {{ trans('tags.form.input.slug.label') }}
                         </label>
-                        <input id="input_tag_slug" value="" name="slug" type="text"
-                            class="form-control"
-                            placeholder="{{ trans('tags.form.input.slug.placeholder') }}" readonly />
+                        <input 
+                            id="input_tag_slug" 
+                            value="{{ old('slug') }}" 
+                            name="slug" 
+                            type="text"
+                            class="form-control @error('slug') is-invalid @enderror"
+                            placeholder="{{ trans('tags.form.input.slug.placeholder') }}" readonly 
+                        />
+                        @error('slug')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="float-right">
                         <a 
