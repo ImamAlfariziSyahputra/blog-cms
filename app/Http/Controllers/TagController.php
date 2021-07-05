@@ -9,15 +9,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
 {
+    private $perPage  = 5;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tags = Tag::all();
-        return view('tags.index', compact('tags'));
+        $tags = $request->get('keyword') 
+            ? Tag::search($request->keyword)->paginate($this->perPage) 
+            : Tag::paginate($this->perPage);
+
+        return view('tags.index', [
+            'tags' => $tags->appends(['keyword' => $request->keyword]),
+        ]);
     }
 
     /**

@@ -17,12 +17,19 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="" method="GET">
+                        {{-- Search Input --}}
+                        <form action="{{ route('tags.index') }}" method="GET">
                             <div class="input-group">
-                                <input name="keyword" type="search" class="form-control" placeholder="{{ trans('tags.form.input.search.placeholder') }}">
+                                <input 
+                                    name="keyword" 
+                                    type="search" 
+                                    class="form-control" 
+                                    placeholder="{{ trans('tags.form.input.search.placeholder') }}"
+                                    value="{{ request()->get('keyword') }}"
+                                >
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search"></i>
+                                        <i class="fas fa-search"></i>
                                     </button>
                                 </div>
                             </div>
@@ -79,12 +86,24 @@
                     @else
                         <p>
                             <strong>
-                                {{ trans('tags.label.no_data.fetch') }}
+                                @if (request()->get('keyword'))
+                                    {{ trans(
+                                        'tags.label.no_data.search', 
+                                        ['keyword' => request()->get('keyword')],
+                                    ) }}
+                                @else
+                                    {{ trans('tags.label.no_data.fetch') }}
+                                @endif
                             </strong>
                         </p>
                     @endif
                 </ul>
             </div>
+            @if ($tags->hasPages())
+                <div class="card-footer">
+                    {{ $tags->links('vendor.pagination.bootstrap-4') }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
