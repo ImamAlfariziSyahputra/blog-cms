@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form action="{{ route('tags.update', $tag) }}" method="POST">
                     @csrf
-                    @method('update')
+                    @method('PUT')
                     <!-- title -->
                     <div class="form-group">
                         <label for="input_tag_title" class="font-weight-bold">
@@ -62,7 +62,10 @@
                         >
                             {{ trans('tags.button.back.value') }}
                         </a>
-                        <button type="submit" class="btn btn-primary px-4">
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary px-4"
+                        >
                             {{ trans('tags.button.edit.value') }}
                         </button>
                     </div>
