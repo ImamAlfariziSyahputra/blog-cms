@@ -71,6 +71,11 @@
                     @endif
                 </ul>
             </div>
+            @if ($categories->hasPages())
+                <div class="card-footer">
+                    {{ $categories->links('vendor.pagination.bootstrap-4') }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
