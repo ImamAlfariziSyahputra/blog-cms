@@ -13,8 +13,9 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('categories.store') }}" method="POST">
+                <form action="{{ route('categories.update', $category) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <!-- title -->
                     <div class="form-group">
                         <label for="input_category_title" class="font-weight-bold">
