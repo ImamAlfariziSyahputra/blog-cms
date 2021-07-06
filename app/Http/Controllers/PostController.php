@@ -28,6 +28,7 @@ class PostController extends Controller
     {
         return view('posts.create', [
             'categories' => Category::with('herit')->onlyParent()->get(),
+            'statuses' => $this->statuses(),
         ]);
     }
 
@@ -85,5 +86,13 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function statuses()
+    {
+        return [
+            'draft' => trans('posts.form.select.status.option.draft'),
+            'publish' => trans('posts.form.select.status.option.publish'),
+        ];
     }
 }
