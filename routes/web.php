@@ -43,6 +43,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     Route::resource('/tags', TagController::class)->except(['show']);
 
     // Posts
+    Route::get('/tags/select', [TagController::class, 'selectInput'])
+        ->name('tags.select');
     Route::resource('/posts', PostController::class);
 
     // File Manager

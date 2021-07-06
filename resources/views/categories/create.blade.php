@@ -146,66 +146,68 @@
 @endsection
 
 @push('cssExternal')
+    {{-- Select2 --}}
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2-bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
 @endpush
 
 @push('jsExternal')
-    <script src="{{asset('vendor/select2/js/select2.min.js') }}"></script>
-    <script src="{{asset('vendor/select2/js/i18n/'. app()->getLocale() .'.js') }}"></script>
-    {{-- File Manager --}}
-    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+{{-- Select2 --}}
+<script src="{{asset('vendor/select2/js/select2.min.js') }}"></script>
+<script src="{{asset('vendor/select2/js/i18n/'. app()->getLocale() .'.js') }}"></script>
+{{-- File Manager --}}
+<script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
 @endpush
 
 @push('jsInternal')
-    <script>
-        $(function() {
-            // Generate Slug
-            function generateSlug(value){
-                return value.trim()
-                .toLowerCase()
-                .replace(/[^a-z\d-]/gi, '-')
-                .replace(/-+/g, '-').replace(/^-|-$/g, "");
-            } 
+<script>
+    $(function() {
+        // Generate Slug
+        function generateSlug(value){
+            return value.trim()
+            .toLowerCase()
+            .replace(/[^a-z\d-]/gi, '-')
+            .replace(/-+/g, '-').replace(/^-|-$/g, "");
+        } 
 
-            //parent category
-            $('#select_category_parent').select2({
-                theme: 'bootstrap4',
-                language: "{{ app()->getLocale() }}",
-                allowClear: true,
-                ajax: {
-                    url: "{{ route('categories.select') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.title,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    }
+        //parent category
+        $('#select_category_parent').select2({
+            theme: 'bootstrap4',
+            language: "{{ app()->getLocale() }}",
+            allowClear: true,
+            ajax: {
+                url: "{{ route('categories.select') }}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.title,
+                                id: item.id
+                            }
+                        })
+                    };
                 }
-            });
-
-            // input title event
-            $('#input_category_title').change(function() {
-                let title = $(this).val();
-                let parentCategory = $('#select_category_parent').val() ?? '';
-                $('#input_category_slug').val(generateSlug(title + '-' + parentCategory));
-            });
-            
-            // input select parentCategory event
-            $('#select_category_parent').change(function() {
-                let title = $('#input_category_title').val();
-                let parentCategory = $(this).val() ?? '';
-                $('#input_category_slug').val(generateSlug(title + '-' + parentCategory));
-            });
-
-            // thumbnail input event
-            $('#button_category_thumbnail').filemanager('image');
+            }
         });
-    </script>
+
+        // input title event
+        $('#input_category_title').change(function() {
+            let title = $(this).val();
+            let parentCategory = $('#select_category_parent').val() ?? '';
+            $('#input_category_slug').val(generateSlug(title + '-' + parentCategory));
+        });
+        
+        // input select parentCategory event
+        $('#select_category_parent').change(function() {
+            let title = $('#input_category_title').val();
+            let parentCategory = $(this).val() ?? '';
+            $('#input_category_slug').val(generateSlug(title + '-' + parentCategory));
+        });
+
+        // thumbnail input event
+        $('#button_category_thumbnail').filemanager('image');
+    });
+</script>
 @endpush
