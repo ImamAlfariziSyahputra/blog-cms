@@ -25,7 +25,7 @@
                                 </label>
                                 <input 
                                     id="input_post_title" 
-                                    value="" 
+                                    value="{{ old('title') }}" 
                                     name="title" 
                                     type="text" 
                                     class="form-control @error('title') is-invalid @enderror"
@@ -43,7 +43,7 @@
                                 </label>
                                 <input 
                                     id="input_post_slug" 
-                                    value="" 
+                                    value="{{ old('slug') }}" 
                                     name="slug" 
                                     type="text" 
                                     class="form-control @error('slug') is-invalid @enderror" 
@@ -75,7 +75,7 @@
                                     <input 
                                         id="input_post_thumbnail" 
                                         name="thumbnail" 
-                                        value="" 
+                                        value="{{ old('thumbnail') }}" 
                                         type="text" 
                                         class="form-control @error('thumbnail') is-invalid @enderror"
                                         placeholder="{{ trans('posts.form.input.thumbnail.placeholder') }}" 
@@ -99,7 +99,7 @@
                                     name="description" 
                                     placeholder="{{ trans('posts.form.textarea.description.placeholder') }}" 
                                     class="form-control @error('description') is-invalid @enderror"
-                                    rows="3"></textarea>
+                                    rows="3">{{ old('description') }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -117,8 +117,7 @@
                                     placeholder="{{ trans('posts.form.textarea.content.placeholder') }}" 
                                     class="form-control @error('content') is-invalid @enderror"
                                     rows="20"
-                                >
-                                </textarea>
+                                >{{ old('content') }}</textarea>
                                 @error('content')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -156,10 +155,15 @@
                                 </label>
                                 <select 
                                     id="select_post_tag" 
-                                    name="tag" 
+                                    name="tag[]" 
                                     data-placeholder="{{ trans('posts.form.select.tag.placeholder') }}" 
                                     class="custom-select w-100 @error('tag') is-invalid @enderror"
                                     multiple>
+                                    @if (old('tag'))
+                                        @foreach (old('tag') as $tag)
+                                            <option value="{{ $tag->id }}" selected>{{ $tag->title }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 @error('tag')
                                     <span class="invalid-feedback" role="alert">
@@ -178,7 +182,12 @@
                                     class="custom-select @error('status') is-invalid @enderror"
                                 >
                                     @foreach ($statuses as $key => $value)
-                                        <option value="{{ $key }}">{{ $value }}</option>
+                                        <option 
+                                            value="{{ $key }}" 
+                                            {{ old('status') == $key ? 'selected' : null }}
+                                        >
+                                            {{ $value }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('status')

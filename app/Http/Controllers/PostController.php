@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -57,7 +58,12 @@ class PostController extends Controller
             $this->customAttributes(),
         );
 
+        // if validate fails
         if($validator->fails()) {
+            // Insert again data Tag with Old Data
+            if($request['tag']) {
+                $request['tag'] = Tag::select('id', 'title')->whereIn('id', $request->tag)->get();
+            }
             return redirect()->back()->withInput($request->all())->withErrors($validator);
         }
 
