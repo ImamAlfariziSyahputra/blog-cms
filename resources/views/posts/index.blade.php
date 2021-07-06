@@ -67,7 +67,7 @@
                 <ul class="list-group list-group-flush">
                     <!-- list post -->
                     @forelse ($posts as $post)
-                        <div class="card">
+                        <div class="card my-2">
                             <div class="card-body">
                                 <h5>
                                     {{ $post->title }}
