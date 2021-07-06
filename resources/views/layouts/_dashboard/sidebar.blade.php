@@ -15,7 +15,7 @@
             {{-- Posts --}}
             <a 
                 class="nav-link {{ setActive([
-                    'posts.index', 'posts.create', 'posts.show', 
+                    'posts.index', 'posts.create', 'posts.show', 'posts.edit'
                 ]) }}" 
                 href="{{ route('posts.index') }}"
             >

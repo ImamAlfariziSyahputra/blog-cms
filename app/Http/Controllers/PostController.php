@@ -134,7 +134,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', [
+            'post' => $post,
+            'categories' => Category::with('herit')->onlyParent()->get(),
+            'statuses' => $this->statuses(),
+        ]);
     }
 
     /**

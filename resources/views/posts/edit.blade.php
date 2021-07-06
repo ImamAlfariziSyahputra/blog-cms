@@ -1,19 +1,20 @@
 @extends('layouts.dashboard')
 
 @section('title')
-{{ trans('posts.title.create') }}
+{{ trans('posts.title.edit') }}
 @endsection
 
 @section('breadcrumbs')
-{{ Breadcrumbs::render('addPosts') }}
+{{ Breadcrumbs::render('editPost', $post) }}
 @endsection
 
 @section('content')
 
 <div class="row">
     <div class="col-md-12">
-    <form action="{{ route('posts.store') }}" method="POST">
+    <form action="{{ route('posts.update', $post) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="card">
                 <div class="card-body">
                     <div class="row d-flex align-items-stretch">
@@ -25,7 +26,7 @@
                                 </label>
                                 <input 
                                     id="input_post_title" 
-                                    value="{{ old('title') }}" 
+                                    value="{{ old('title', $post->title) }}" 
                                     name="title" 
                                     type="text" 
                                     class="form-control @error('title') is-invalid @enderror"
@@ -43,7 +44,7 @@
                                 </label>
                                 <input 
                                     id="input_post_slug" 
-                                    value="{{ old('slug') }}" 
+                                    value="{{ old('slug', $post->slug) }}" 
                                     name="slug" 
                                     type="text" 
                                     class="form-control @error('slug') is-invalid @enderror" 
@@ -75,7 +76,7 @@
                                     <input 
                                         id="input_post_thumbnail" 
                                         name="thumbnail" 
-                                        value="{{ old('thumbnail') }}" 
+                                        value="{{ old('thumbnail', asset($post->thumbnail)) }}" 
                                         type="text" 
                                         class="form-control @error('thumbnail') is-invalid @enderror"
                                         placeholder="{{ trans('posts.form.input.thumbnail.placeholder') }}" 
@@ -99,7 +100,7 @@
                                     name="description" 
                                     placeholder="{{ trans('posts.form.textarea.description.placeholder') }}" 
                                     class="form-control @error('description') is-invalid @enderror"
-                                    rows="3">{{ old('description') }}</textarea>
+                                    rows="3">{{ old('description', $post->description) }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -117,7 +118,7 @@
                                     placeholder="{{ trans('posts.form.textarea.content.placeholder') }}" 
                                     class="form-control @error('content') is-invalid @enderror"
                                     rows="20"
-                                >{{ old('content') }}</textarea>
+                                >{{ old('content', $post->content) }}</textarea>
                                 @error('content')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -137,7 +138,11 @@
                                     <!-- List category -->
                                     @include('posts._listCategory', [
                                         'categories' => $categories,
-                                        'categoryChecked' => old('category'),
+                                        // Below is how to Checked Checkbox Input
+                                        'categoryChecked' => old(
+                                            'category', 
+                                            $post->category->pluck('id')->toArray()
+                                        ),
                                     ])
                                     <!-- List category -->
                                 </div>
@@ -162,8 +167,8 @@
                                     data-placeholder="{{ trans('posts.form.select.tag.placeholder') }}" 
                                     class="custom-select w-100 @error('tag') is-invalid @enderror"
                                     multiple>
-                                    @if (old('tag'))
-                                        @foreach (old('tag') as $tag)
+                                    @if (old('tag', $post->tag))
+                                        @foreach (old('tag', $post->tag) as $tag)
                                             <option value="{{ $tag->id }}" selected>{{ $tag->title }}</option>
                                         @endforeach
                                     @endif
@@ -187,7 +192,7 @@
                                     @foreach ($statuses as $key => $value)
                                         <option 
                                             value="{{ $key }}" 
-                                            {{ old('status') == $key ? 'selected' : null }}
+                                            {{ old('status', $post->status) == $key ? 'selected' : null }}
                                         >
                                             {{ $value }}
                                         </option>
@@ -211,7 +216,7 @@
                                     {{ trans('posts.button.back.value') }}
                                 </a>
                                 <button type="submit" class="btn btn-primary px-4">
-                                    {{ trans('posts.button.save.value') }}
+                                    {{ trans('posts.button.edit.value') }}
                                 </button>
                             </div>
                         </div>
