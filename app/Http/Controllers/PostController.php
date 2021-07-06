@@ -150,7 +150,72 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|string|max:60',
+                'slug' => 'required|string|unique:posts,slug,' . $post->id,
+                'thumbnail' => 'required',
+                'description' => 'required|string|max:240',
+                'content' => 'required',
+                'category' => 'required',
+                'tag' => 'required',
+                'status' => 'required'
+            ],
+            [],
+            $this->customAttributes(),
+        );
+
+        // if validate fails
+        if($validator->fails()) {
+            // Insert again data Tag with Old Data
+            if($request['tag']) {
+                $request['tag'] = Tag::select('id', 'title')->whereIn('id', $request->tag)->get();
+            }
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $post->update([
+                'title' => $request->title,
+                'slug' => $request->slug,
+                'thumbnail' => parse_url($request->thumbnail)['path'],
+                'description' => $request->description,
+                'content' => $request->content,
+                'category' => $request->category,
+                'tag' => $request->tag,
+                'status' => $request->status,
+                'user_id' => Auth::user()->id,
+            ]);
+
+            $post->tag()->sync($request->tag);
+            $post->category()->sync($request->category);
+
+            Alert::success(
+                trans('posts.alert.update.title'),
+                trans('posts.alert.update.message.success'),
+            );
+
+            return redirect()->route('posts.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Alert::error(
+                trans('posts.alert.update.title'),
+                trans('posts.alert.update.message.error', ['error' => $th->getMessage()]),
+            );
+
+            // Insert again data Tag with Old Data
+            if($request['tag']) {
+                $request['tag'] = Tag::select('id', 'title')->whereIn('id', $request->tag)->get();
+            }
+
+            return redirect()->back()->withInput($request->all());
+        } finally {
+            DB::commit();
+        }
     }
 
     /**
@@ -161,7 +226,31 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $post->tag()->detach();
+            $post->category()->detach();
+
+            $post->delete();
+
+
+            Alert::success(
+                trans('posts.alert.delete.title'),
+                trans('posts.alert.delete.message.success'),
+            );
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Alert::error(
+                trans('posts.alert.delete.title'),
+                trans('posts.alert.delete.message.error', ['error' => $th->getMessage()]),
+            );
+        } finally {
+            DB::commit();
+
+            return redirect()->back();
+        }
     }
 
     private function statuses()
