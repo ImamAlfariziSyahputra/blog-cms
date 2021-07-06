@@ -29,10 +29,6 @@ Breadcrumbs::for('addCategory', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('editCategory', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('categories');
     $trail->push('Edit', route('categories.edit', compact('category')));
-});
-
-Breadcrumbs::for('editCategoryTitle', function (BreadcrumbTrail $trail, $category) {
-    $trail->parent('editCategory', $category);
     $trail->push($category->title, route('categories.edit', compact('category')));
 });
 
@@ -40,10 +36,6 @@ Breadcrumbs::for('editCategoryTitle', function (BreadcrumbTrail $trail, $categor
 Breadcrumbs::for('detailCategory', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('categories');
     $trail->push('Detail', route('categories.show', compact('category')));
-});
-
-Breadcrumbs::for('detailCategoryTitle', function (BreadcrumbTrail $trail, $category) {
-    $trail->parent('detailCategory', $category);
     $trail->push($category->title, route('categories.show', compact('category')));
 });
 
@@ -74,6 +66,14 @@ Breadcrumbs::for('addPosts', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push('Add', route('posts.create'));
 });
+
+// Posts Detail
+Breadcrumbs::for('detailPost', function (BreadcrumbTrail $trail, $post) {
+    $trail->parent('posts');
+    $trail->push('Detail', route('posts.show', compact('post')));
+    $trail->push($post->title, route('posts.show', compact('post')));
+});
+
 
 // Home > Blog
 // Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {

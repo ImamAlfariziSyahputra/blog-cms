@@ -5,7 +5,7 @@
 @endsection
 
 @section('breadcrumbs')
-{{ Breadcrumbs::render('editCategoryTitle', $category) }}
+{{ Breadcrumbs::render('editCategory', $category) }}
 @endsection
 @section('content')
 

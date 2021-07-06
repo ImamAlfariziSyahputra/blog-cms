@@ -121,7 +121,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
+        $categories = $post->category;
+        $tags = $post->tag;
+        return view('posts.show', compact('post', 'categories', 'tags'));
     }
 
     /**
