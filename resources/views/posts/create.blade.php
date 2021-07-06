@@ -22,15 +22,25 @@
                                 <label for="input_post_title" class="font-weight-bold">
                                     {{ trans('posts.form.input.title.label') }}
                                 </label>
-                                <input id="input_post_title" value="" name="title" type="text" class="form-control"
-                                    placeholder="" />
+                                <input 
+                                    id="input_post_title" 
+                                    value="" name="title" 
+                                    type="text" 
+                                    class="form-control"
+                                    placeholder="{{ trans('posts.form.input.title.placeholder') }}" />
                             </div>
                             <!-- slug -->
                             <div class="form-group">
                                 <label for="input_post_slug" class="font-weight-bold">
                                     {{ trans('posts.form.input.slug.label') }}
                                 </label>
-                                <input id="input_post_slug" value="" name="slug" type="text" class="form-control" placeholder=""
+                                <input 
+                                    id="input_post_slug" 
+                                    value="" 
+                                    name="slug" 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="{{ trans('posts.form.input.slug.placeholder') }}"
                                     readonly />
                             </div>
                             <!-- thumbnail -->
@@ -56,17 +66,22 @@
                                         value="" 
                                         type="text" 
                                         class="form-control"
-                                        placeholder="" 
+                                        placeholder="{{ trans('posts.form.input.thumbnail.placeholder') }}" 
                                         readonly />
                                 </div>
                             </div>
+                            {{-- Image Preview --}}
                             <div id="holder"></div>
                             <!-- description -->
                             <div class="form-group">
                                 <label for="input_post_description" class="font-weight-bold">
                                     {{ trans('posts.form.textarea.description.label') }}
                                 </label>
-                                <textarea id="input_post_description" name="description" placeholder="" class="form-control "
+                                <textarea 
+                                    id="input_post_description" 
+                                    name="description" 
+                                    placeholder="{{ trans('posts.form.textarea.description.placeholder') }}" 
+                                    class="form-control "
                                     rows="3"></textarea>
                             </div>
                             <!-- content -->
@@ -77,7 +92,7 @@
                                 <textarea 
                                     id="input_post_content" 
                                     name="content" 
-                                    placeholder="" 
+                                    placeholder="{{ trans('posts.form.textarea.content.placeholder') }}" 
                                     class="form-control "
                                     rows="20"
                                 ></textarea>
@@ -104,7 +119,11 @@
                                 <label for="select_post_tag" class="font-weight-bold">
                                     {{ trans('posts.form.select.tag.label') }}
                                 </label>
-                                <select id="select_post_tag" name="tag" data-placeholder="" class="custom-select w-100"
+                                <select 
+                                    id="select_post_tag" 
+                                    name="tag" 
+                                    data-placeholder="{{ trans('posts.form.select.tag.placeholder') }}" 
+                                    class="custom-select w-100"
                                     multiple>
                                 </select>
                             </div>
