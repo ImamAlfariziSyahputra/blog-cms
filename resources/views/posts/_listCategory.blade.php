@@ -5,7 +5,7 @@
                 class="form-check-input"
                 type="checkbox" 
                 value="{{ $category->id }}"
-                name="category[]">
+                name="category">
             <label class="form-check-label">{{ $category->title }}</label>
             @if ($category->herit)
                 @include('posts._listCategory', [

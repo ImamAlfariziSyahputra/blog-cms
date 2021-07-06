@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -40,7 +41,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'title' => 'required|string|max:60',
+                'slug' => 'required|string|unique:posts,slug',
+                'thumbnail' => 'required',
+                'description' => 'required|string|max:240',
+                'content' => 'required',
+                'category' => 'required',
+                'tag' => 'required',
+                'status' => 'required'
+            ],
+            [],
+            $this->customAttributes(),
+        );
+
+        if($validator->fails()) {
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+
+        dd($request->all());
     }
 
     /**
@@ -88,11 +109,25 @@ class PostController extends Controller
         //
     }
 
-    public function statuses()
+    private function statuses()
     {
         return [
             'draft' => trans('posts.form.select.status.option.draft'),
             'publish' => trans('posts.form.select.status.option.publish'),
+        ];
+    }
+
+    private function customAttributes()
+    {
+        return [
+            'title' => trans('posts.form.input.title.attribute'),
+            'slug' => trans('posts.form.input.slug.attribute'),
+            'thumbnail' => trans('posts.form.input.thumbnail.attribute'),
+            'description' => trans('posts.form.textarea.description.attribute'),
+            'content' => trans('posts.form.textarea.content.attribute'),
+            'category' => trans('posts.form.input.category.attribute'),
+            'tag' => trans('posts.form.select.tag.attribute'),
+            'status' => trans('posts.form.select.status.attribute'),
         ];
     }
 }
