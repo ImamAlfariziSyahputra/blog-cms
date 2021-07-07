@@ -57,13 +57,18 @@
             </div>
             <a class="nav-link" href="#">
                 <div class="sb-nav-link-icon">
-                <i class="fas fa-user"></i>
+                    <i class="fas fa-user"></i>
                 </div>
                 {{ trans('dashboard.link.users') }}
             </a>
-            <a class="nav-link" href="#">
+            <a 
+                class="nav-link {{ setActive([
+                    'roles.index', 
+                ]) }}" 
+                href="{{ route('roles.index') }}"
+            >
                 <div class="sb-nav-link-icon">
-                <i class="fas fa-user-shield"></i>
+                    <i class="fas fa-user-shield"></i>
                 </div>
                 {{ trans('dashboard.link.roles') }}
             </a>
@@ -92,4 +97,3 @@
         {{ Auth::user()->name }}
     </div>
 </nav>
- 
