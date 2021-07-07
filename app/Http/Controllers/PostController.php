@@ -29,6 +29,10 @@ class PostController extends Controller
             ? Post::publish() 
             : Post::draft();
 
+        if($request->get('keyword')) {
+            $posts->search($request->get('keyword'));
+        }
+
         return view('posts.index', [
             'posts' => $posts->get(),
             'statuses' => $this->statuses(),
