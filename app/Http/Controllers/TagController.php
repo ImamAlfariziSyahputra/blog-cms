@@ -9,7 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
 {
-    private $perPage  = 5;
+    private $perPage  = 2;
     /**
      * Display a listing of the resource.
      *
