@@ -23,12 +23,14 @@
                                         {{ trans('posts.form.select.status.label') }}
                                     </label>
                                     <select name="status" class="custom-select">
-                                        <option value="publish" selected>
-                                            Publish
-                                        </option>
-                                        <option value="draft">
-                                            Draft
-                                        </option>
+                                        @foreach ($statuses as $key => $label)
+                                            <option 
+                                                value="{{ $key }}" 
+                                                {{ $statusSelected == $key ? 'selected' : '' }}
+                                            >
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     <div class="input-group-append">
                                         <button tton class="btn btn-primary" type="submit">
