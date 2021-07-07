@@ -70,9 +70,15 @@
             <div class="sb-sidenav-menu-heading">
                 {{ trans('dashboard.menu.setting') }}
             </div>
-            <a class="nav-link" href="#">
+            {{-- File Manager --}}
+            <a 
+                class="nav-link {{ setActive([
+                    'fileManager.index', 
+                ]) }}" 
+                href="{{ route('fileManager.index') }}"
+            >
                 <div class="sb-nav-link-icon">
-                <i class="fas fa-photo-video"></i>
+                    <i class="fas fa-photo-video"></i>
                 </div>
                 {{ trans('dashboard.link.file_manager') }}
             </a>

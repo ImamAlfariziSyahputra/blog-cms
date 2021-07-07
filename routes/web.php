@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 
     // File Manager
     Route::group(['prefix' => 'filemanager'], function () {
+        Route::get('/index', [FileManagerController::class, 'index'])->name('fileManager.index');
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 

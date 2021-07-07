@@ -80,6 +80,12 @@ Breadcrumbs::for('editPost', function (BreadcrumbTrail $trail, $post) {
     $trail->push($post->title, route('posts.edit', compact('post')));
 });
 
+// File Manager Index
+Breadcrumbs::for('fileManager', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('File Manager', route('fileManager.index'));
+});
+
 
 // Home > Blog
 // Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {
