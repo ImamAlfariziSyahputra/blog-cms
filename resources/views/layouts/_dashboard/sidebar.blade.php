@@ -63,7 +63,7 @@
             </a>
             <a 
                 class="nav-link {{ setActive([
-                    'roles.index', 'roles.show', 
+                    'roles.index', 'roles.show', 'roles.create', 
                 ]) }}" 
                 href="{{ route('roles.index') }}"
             >
