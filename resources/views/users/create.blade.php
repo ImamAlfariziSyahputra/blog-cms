@@ -102,3 +102,41 @@
     </div>
 </div>
 @endsection
+
+@push('cssExternal')
+{{-- Select2 --}}
+<link rel="stylesheet" href="{{ asset('vendor/select2/css/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+@endpush
+
+@push('jsExternal')
+{{-- Select2 --}}
+<script src="{{asset('vendor/select2/js/select2.min.js') }}"></script>
+<script src="{{asset('vendor/select2/js/i18n/'. app()->getLocale() .'.js') }}"></script>
+@endpush
+
+@push('jsInternal')
+<script>
+    // Role Select
+    $('#select_user_role').select2({
+            theme: 'bootstrap4',
+            language: "{{ app()->getLocale() }}",
+            allowClear: true,
+            ajax: {
+                url: "{{ route('users.select') }}",
+                dataType: 'json',
+                delay: 250,
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+</script>
+@endpush

@@ -48,12 +48,6 @@ class CategoryController extends Controller
             $categories = Category::select('id', 'title')->onlyParent()->limit(6)->get();
         }
 
-        try {
-
-        } catch(err) {
-
-        }
-
         return response()->json($categories);
     }
 

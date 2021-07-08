@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,6 +18,20 @@ class UserController extends Controller
         return view('users.index', [
             'users' => User::all(),
         ]);
+    }
+
+    public function selectInput(Request $request)
+    {
+        $users = Role::select('id', 'name')->limit(6)->get();
+
+        if ($request->has('q')) {
+            $users = Role::select('id', 'name')
+                ->where('name', 'LIKE', "%{$request->q}%")
+                ->limit(6)
+                ->get();
+        }
+
+        return response()->json($users);
     }
 
     /**
