@@ -7,6 +7,7 @@ use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
 
     // Roles
     Route::resource('/roles', RoleController::class);
+
+    // User
+    Route::resource('/users', UserController::class);
 });
 

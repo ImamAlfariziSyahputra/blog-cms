@@ -55,12 +55,19 @@
             <div class="sb-sidenav-menu-heading">
                 {{ trans('dashboard.menu.user_permission') }}
             </div>
-            <a class="nav-link" href="#">
+            {{-- Users --}}
+            <a 
+                class="nav-link {{ setActive([
+                    'users.index', 
+                ]) }}" 
+                href="{{ route('users.index') }}"
+            >
                 <div class="sb-nav-link-icon">
                     <i class="fas fa-user"></i>
                 </div>
                 {{ trans('dashboard.link.users') }}
             </a>
+            {{-- Roles --}}
             <a 
                 class="nav-link {{ setActive([
                     'roles.index', 'roles.show', 'roles.create', 'roles.edit'
