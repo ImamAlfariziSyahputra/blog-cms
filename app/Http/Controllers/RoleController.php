@@ -170,7 +170,27 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        DB::beginTransaction();
+        try {
+            // remove role's permissions
+            $role->revokePermissionTo($role->permissions->pluck('name')->toArray());
+            $role->delete();
+
+            Alert::success(
+                trans('roles.alert.delete.title'),
+                trans('roles.alert.delete.message.success'),
+            );
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            Alert::error(
+                trans('roles.alert.delete.title'),
+                trans('roles.alert.delete.message.error', ['error' => $th->getMessage()]),
+            );
+        } finally {
+            DB::commit();
+            return redirect()->back();
+        }
     }
 
     private function customAttributes()
