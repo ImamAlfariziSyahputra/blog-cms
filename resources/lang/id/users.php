@@ -67,7 +67,7 @@ return [
             'value' => 'Hapus'
         ],
         'cancel' => [
-            'value' => 'Batal'
+            'value' => 'Kembali'
         ],
     ],
     'alert' => [

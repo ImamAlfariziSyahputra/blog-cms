@@ -67,7 +67,7 @@ return [
             'value' => 'Delete'
         ],
         'cancel' => [
-            'value' => 'Cancel'
+            'value' => 'Back'
         ],
     ],
     'alert' => [
