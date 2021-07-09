@@ -14,8 +14,9 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('users.update', $user) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <!-- name -->
                     <div class="form-group">
                         <label for="input_user_name" class="font-weight-bold">
@@ -83,6 +84,17 @@
                                 {{ $message }}
                             </span>
                         @enderror
+                    </div>
+                    <div class="float-right">
+                        <a 
+                            class="btn btn-warning text-white px-4 mx-2" 
+                            href="{{ route('users.index') }}"
+                        >
+                            {{ trans('users.button.cancel.value') }}
+                        </a>
+                        <button type="submit" class="btn btn-primary float-right px-4">
+                            {{ trans('users.button.edit.value') }}
+                        </button>
                     </div>
                 </form>
             </div>
