@@ -93,7 +93,7 @@
                                 <div class="float-right">
                                     <!-- edit -->
                                     <a 
-                                        href="" 
+                                        href="{{ route('users.edit', $user) }}" 
                                         class="btn btn-sm btn-info" 
                                         role="button"
                                     >

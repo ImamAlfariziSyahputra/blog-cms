@@ -58,7 +58,7 @@
             {{-- Users --}}
             <a 
                 class="nav-link {{ setActive([
-                    'users.index', 'users.create', 
+                    'users.index', 'users.create', 'users.edit', 
                 ]) }}" 
                 href="{{ route('users.index') }}"
             >

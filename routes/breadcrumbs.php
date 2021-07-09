@@ -112,12 +112,18 @@ Breadcrumbs::for('editRole', function (BreadcrumbTrail $trail, $role) {
 // Users Index
 Breadcrumbs::for('user', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('User', route('users.index'));
+    $trail->push('Users', route('users.index'));
 });
 
 Breadcrumbs::for('addUser', function (BreadcrumbTrail $trail) {
     $trail->parent('user');
     $trail->push('Add', route('users.create'));
+});
+
+Breadcrumbs::for('editUser', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('user');
+    $trail->push('Edit', route('users.edit', compact('user')));
+    $trail->push($user->name, route('users.edit', compact('user')));
 });
 
 
