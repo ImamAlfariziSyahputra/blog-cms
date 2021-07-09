@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -54,7 +55,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+            'name' => 'required|string|min:3|max:40',
+            'role' => 'required',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:3|confirmed',
+            ],
+            [],
+            $this->customAttributes(),
+        );
+
+        if($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withInput($request->all())
+                ->withErrors($validator);
+        }
+
+        dd($request->all());
     }
 
     /**
@@ -100,5 +120,15 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    private function customAttributes()
+    {
+        return [
+            'name' => trans('users.form.input.name.attribute'),
+            'role' => trans('users.form.select.role.attribute'),
+            'email' => trans('users.form.input.email.attribute'),
+            'password' => trans('users.form.input.password.attribute'),
+        ];
     }
 }

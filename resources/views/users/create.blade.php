@@ -14,7 +14,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form action="" method="POST">
+                <form action="{{ route('users.store') }}" method="POST">
+                    @csrf
                     <!-- name -->
                     <div class="form-group">
                         <label for="input_user_name" class="font-weight-bold">
@@ -22,11 +23,17 @@
                         </label>
                         <input 
                             id="input_user_name" 
-                            value="" name="name" 
+                            value="" 
+                            name="name" 
                             type="text" 
-                            class="form-control" 
+                            class="form-control @error('name') is-invalid @enderror" 
                             placeholder="{{ trans('users.form.input.name.placeholder') }}" />
                         <!-- error message -->
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <!-- role -->
                     <div class="form-group">
@@ -37,11 +44,16 @@
                             id="select_user_role" 
                             name="role" 
                             data-placeholder="{{ trans('users.form.select.role.placeholder') }}" 
-                            class="custom-select w-100"
+                            class="custom-select w-100 @error('role') is-invalid @enderror"
                         >
                             <option value="" selected="selected">Role</option>
                         </select>
                         <!-- error message -->
+                        @error('role')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <!-- email -->
                     <div class="form-group">
@@ -50,12 +62,18 @@
                         </label>
                         <input 
                             id="input_user_email" 
-                            value="" name="email" 
+                            value="" 
+                            name="email" 
                             type="email" 
-                            class="form-control" 
+                            class="form-control @error('email') is-invalid @enderror" 
                             placeholder="{{ trans('users.form.input.email.placeholder') }}"
                             autocomplete="email" />
                         <!-- error message -->
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <!-- password -->
                     <div class="form-group">
@@ -66,10 +84,15 @@
                             id="input_user_password" 
                             name="password" 
                             type="password" 
-                            class="form-control" 
+                            class="form-control @error('password') is-invalid @enderror" 
                             placeholder="{{ trans('users.form.input.password.placeholder') }}"
                             autocomplete="new-password" />
                         <!-- error message -->
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
                     </div>
                     <!-- password_confirmation -->
                     <div class="form-group">
