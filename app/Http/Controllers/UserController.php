@@ -68,6 +68,7 @@ class UserController extends Controller
         );
 
         if($validator->fails()) {
+            $request['role'] = Role::select('id', 'name')->find($request->role);
             return redirect()
                 ->back()
                 ->withInput($request->all())

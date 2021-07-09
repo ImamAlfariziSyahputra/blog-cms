@@ -23,7 +23,7 @@
                         </label>
                         <input 
                             id="input_user_name" 
-                            value="" 
+                            value="{{ old('name') }}" 
                             name="name" 
                             type="text" 
                             class="form-control @error('name') is-invalid @enderror" 
@@ -46,7 +46,11 @@
                             data-placeholder="{{ trans('users.form.select.role.placeholder') }}" 
                             class="custom-select w-100 @error('role') is-invalid @enderror"
                         >
-                            <option value="" selected="selected">Role</option>
+                            @if (old('role'))
+                                <option value="{{ old('role')->id }}" selected ="selected">
+                                    {{ old('role')->name }}
+                                </option>
+                            @endif
                         </select>
                         <!-- error message -->
                         @error('role')
@@ -62,7 +66,7 @@
                         </label>
                         <input 
                             id="input_user_email" 
-                            value="" 
+                            value="{{ old('email') }}" 
                             name="email" 
                             type="email" 
                             class="form-control @error('email') is-invalid @enderror" 
