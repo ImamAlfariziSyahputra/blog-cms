@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    private $perPage = 1;
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +22,12 @@ class UserController extends Controller
     {
         $users = [];
         if($request->get('keyword')) {
-            $users = User::search($request->keyword)->get();
+            $users = User::search($request->keyword)->paginate($this->perPage);
         } else {
-            $users = User::all();
+            $users = User::paginate($this->perPage);
         }
         return view('users.index', [
-            'users' => $users,
+            'users' => $users->withQueryString(),
         ]);
     }
 
