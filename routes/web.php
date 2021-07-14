@@ -62,6 +62,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function() {
     // User
     Route::get('/users/select', [UserController::class, 'selectInput'])
     ->name('users.select');;
-    Route::resource('/users', UserController::class);
+    Route::resource('/users', UserController::class)->except(['show']);
 });
 

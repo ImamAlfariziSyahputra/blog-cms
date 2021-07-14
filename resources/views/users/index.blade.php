@@ -20,7 +20,7 @@
                             <div class="input-group">
                                 <input 
                                     name="keyword" 
-                                    value="" 
+                                    value="{{ request()->get('keyword') }}" 
                                     type="search" 
                                     class="form-control" 
                                     placeholder="{{ trans('users.form.input.search.placeholder') }}">
@@ -101,11 +101,17 @@
                                     </a>
                                     <!-- delete -->
                                     <form 
-                                        action="" 
+                                        action="{{ route('users.destroy', $user) }}" 
                                         method="POST" 
                                         role="alert" 
+                                        alert-text="{{ trans(
+                                            'users.alert.delete.message.confirm',
+                                            ['name' => $user->name],
+                                        ) }}"
                                         class="d-inline"
                                     >
+                                        @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -117,7 +123,14 @@
                     @empty
                         <p>
                             <strong>
-                                {{ trans('users.label.no_data.fetch') }}
+                                @if (request()->get('keyword'))
+                                    {{ 
+                                        trans('users.label.no_data.search', 
+                                        ['keyword' => request()->get('keyword')]) 
+                                    }}
+                                @else
+                                    {{ trans('users.label.no_data.fetch') }}
+                                @endif
                             </strong>
                         </p>
                     @endforelse
@@ -131,3 +144,28 @@
     </div>
 </div>
 @endsection
+
+@push('jsInternal')
+<script>
+    $(document).ready(function() {
+        // Event Delete Tag
+        $('form[role="alert"]').submit(function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: "{{ trans('users.alert.delete.title') }}",
+                text: $(this).attr('alert-text'),
+                icon: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                cancelButtonText: "{{ trans('users.button.cancel.value') }}",
+                reverseButtons: true,
+                confirmButtonText: "{{ trans('users.button.delete.value') }}",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.submit()
+                }
+            });
+        });
+    });
+</script>
+@endpush

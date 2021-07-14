@@ -17,10 +17,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $users = [];
+        if($request->get('keyword')) {
+            $users = User::search($request->keyword)->get();
+        } else {
+            $users = User::all();
+        }
         return view('users.index', [
-            'users' => User::all(),
+            'users' => $users,
         ]);
     }
 
@@ -196,7 +202,29 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $user->removeRole($user->roles->first());
+
+            $user->delete();
+
+            Alert::success(
+                trans('users.alert.delete.title'),
+                trans('users.alert.delete.message.success'),
+            );
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Alert::error(
+                trans('users.alert.delete.title'),
+                trans('users.alert.delete.message.error', ['error' => $th->getMessage()]),
+            );
+        } finally {
+            DB::commit();
+            return redirect()->back();
+        }
+
     }
 
     private function customAttributes()
