@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    private $perPage = 1;
+    private $perPage = 5;
     /**
      * Display a listing of the resource.
      *

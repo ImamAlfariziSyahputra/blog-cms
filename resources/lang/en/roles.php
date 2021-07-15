@@ -74,8 +74,9 @@ return [
             'message' => [
                 'confirm' => "Are you sure you want to delete the :name role?",
                 'success' => "Roles deleted successfully.",
-                'error' => "An error occurred while deleting the role. :error"
+                'error' => "An error occurred while deleting the role. :error",
+                'warning' => "Sorry, the :name role cannot be deleted. Because it's still in use.",
             ]
         ],
-    ]
+    ],
 ];

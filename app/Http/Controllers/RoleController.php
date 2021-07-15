@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -175,6 +176,17 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        // validate if role user still in used
+        if(User::role($role->name)->count()) {
+            Alert::warning(
+                trans('roles.alert.delete.title'),
+                trans('roles.alert.delete.message.warning', ['name' => $role->name]),
+            );
+            
+            return redirect()->back();
+        }
+
+        // delete logic
         DB::beginTransaction();
         try {
             // remove role's permissions
