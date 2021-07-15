@@ -13,17 +13,19 @@
                 {{ trans('dashboard.menu.master') }}
             </div>
             {{-- Posts --}}
-            <a 
-                class="nav-link {{ setActive([
-                    'posts.index', 'posts.create', 'posts.show', 'posts.edit'
-                ]) }}" 
-                href="{{ route('posts.index') }}"
-            >
-                <div class="sb-nav-link-icon">
-                    <i class="far fa-newspaper"></i>
-                </div>
-                {{ trans('dashboard.link.posts') }}
-            </a>
+            @can('manage_posts')
+                <a 
+                    class="nav-link {{ setActive([
+                        'posts.index', 'posts.create', 'posts.show', 'posts.edit'
+                    ]) }}" 
+                    href="{{ route('posts.index') }}"
+                >
+                    <div class="sb-nav-link-icon">
+                        <i class="far fa-newspaper"></i>
+                    </div>
+                    {{ trans('dashboard.link.posts') }}
+                </a>
+            @endcan
             {{-- Categories --}}
             <a 
                 class="nav-link 
