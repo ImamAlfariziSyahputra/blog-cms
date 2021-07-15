@@ -62,17 +62,19 @@
                 {{ trans('dashboard.menu.user_permission') }}
             </div>
             {{-- Users --}}
-            <a 
-                class="nav-link {{ setActive([
-                    'users.index', 'users.create', 'users.edit', 
-                ]) }}" 
-                href="{{ route('users.index') }}"
-            >
-                <div class="sb-nav-link-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                {{ trans('dashboard.link.users') }}
-            </a>
+            @can('manage_users')
+                <a 
+                    class="nav-link {{ setActive([
+                        'users.index', 'users.create', 'users.edit', 
+                    ]) }}" 
+                    href="{{ route('users.index') }}"
+                >
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {{ trans('dashboard.link.users') }}
+                </a>
+            @endcan
             {{-- Roles --}}
             @can('manage_roles')
                 <a 
