@@ -74,17 +74,19 @@
                 {{ trans('dashboard.link.users') }}
             </a>
             {{-- Roles --}}
-            <a 
-                class="nav-link {{ setActive([
-                    'roles.index', 'roles.show', 'roles.create', 'roles.edit'
-                ]) }}" 
-                href="{{ route('roles.index') }}"
-            >
-                <div class="sb-nav-link-icon">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                {{ trans('dashboard.link.roles') }}
-            </a>
+            @can('manage_roles')
+                <a 
+                    class="nav-link {{ setActive([
+                        'roles.index', 'roles.show', 'roles.create', 'roles.edit'
+                    ]) }}" 
+                    href="{{ route('roles.index') }}"
+                >
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    {{ trans('dashboard.link.roles') }}
+                </a>
+            @endcan
             <div class="sb-sidenav-menu-heading">
                 {{ trans('dashboard.menu.setting') }}
             </div>

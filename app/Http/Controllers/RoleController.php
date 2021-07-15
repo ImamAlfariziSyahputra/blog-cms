@@ -11,6 +11,23 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class RoleController extends Controller
 {
+    // 'manage_roles' => [
+    //     'role_show',
+    //     'role_create',
+    //     'role_update',
+    //     'role_detail',
+    //     'role_delete'
+    // ],
+
+    public function __construct()
+    {
+        $this->middleware('permission:role_show', ['only' => 'index']);
+        $this->middleware('permission:role_create', ['only' => ['create','store']]);
+        $this->middleware('permission:role_update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:role_detail', ['only' => 'show']);
+        $this->middleware('permission:role_delete', ['only' => 'destroy']);
+    }
+
     private $perPage = 5;
     /**
      * Display a listing of the resource.
