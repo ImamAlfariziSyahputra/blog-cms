@@ -8,33 +8,39 @@
         </label>
         <div>
             <!-- detail -->
-            <a href="{{ route('categories.show', $category) }}" class="btn btn-sm btn-primary" role="button">
-                <i class="fas fa-eye"></i>
-            </a>
+            @can('category_detail')
+                <a href="{{ route('categories.show', $category) }}" class="btn btn-sm btn-primary" role="button">
+                    <i class="fas fa-eye"></i>
+                </a>
+            @endcan
             <!-- edit -->
-            <a href="{{ route('categories.edit', compact('category')) }}" class="btn btn-sm btn-info" role="button">
-                <i class="fas fa-edit"></i>
-            </a>
+            @can('category_update')
+                <a href="{{ route('categories.edit', compact('category')) }}" class="btn btn-sm btn-info" role="button">
+                    <i class="fas fa-edit"></i>
+                </a>
+            @endcan
             <!-- delete -->
-            <form 
-                class="d-inline" 
-                role="alert" 
-                action="{{ route('categories.destroy', $category) }}" 
-                method="POST"
-                alert-title="{{ trans('categories.alert.delete.title') }}"
-                alert-text="{{ trans(
-                    'categories.alert.delete.message.confirm', 
-                    ['title' => $category->title],
-                ) }}"
-                alert-btn-yes="{{ trans('categories.button.delete.value') }}"
-                alert-btn-cancel="{{ trans('categories.button.cancel.value') }}"
-            >
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </form>
+            @can('category_delete')
+                <form 
+                    class="d-inline" 
+                    role="alert" 
+                    action="{{ route('categories.destroy', $category) }}" 
+                    method="POST"
+                    alert-title="{{ trans('categories.alert.delete.title') }}"
+                    alert-text="{{ trans(
+                        'categories.alert.delete.message.confirm', 
+                        ['title' => $category->title],
+                    ) }}"
+                    alert-btn-yes="{{ trans('categories.button.delete.value') }}"
+                    alert-btn-cancel="{{ trans('categories.button.cancel.value') }}"
+                >
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            @endcan
         </div>
         <!-- todo:show subcategory -->
         @if ($category->herit && !trim(request()->get('keyword')))

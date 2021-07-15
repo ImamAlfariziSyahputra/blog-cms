@@ -36,5 +36,16 @@ class AuthServiceProvider extends ServiceProvider
                 ],
             );
         });
+        Gate::define('manage_categories', function($user) {
+            return $user->hasAnyPermission(
+                [
+                    'category_show',
+                    'category_create',
+                    'category_update',
+                    'category_detail',
+                    'category_delete'
+                ],
+            );
+        });
     }
 }

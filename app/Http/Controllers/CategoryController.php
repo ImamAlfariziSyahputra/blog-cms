@@ -10,6 +10,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
+    // 'manage_categories' => [
+    //     'category_show',
+    //     'category_create',
+    //     'category_update',
+    //     'category_detail',
+    //     'category_delete'
+    // ],
+    public function __construct()
+    {
+        $this->middleware('permission:category_show', ['only' => 'index']);
+        $this->middleware('permission:category_create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:category_update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:category_detail', ['only' => 'show']);
+        $this->middleware('permission:category_delete', ['only' => 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -190,7 +205,7 @@ class CategoryController extends Controller
 
         // Update Data
         try {
-            $category->updatee([
+            $category->update([
                 'title' => $request->title,
                 'slug' => $request->slug,
                 'thumbnail' => $parsedThumbnail,
