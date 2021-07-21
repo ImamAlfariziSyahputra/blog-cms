@@ -44,7 +44,7 @@ class PostController extends Controller
             ? Post::publish() 
             : Post::draft();
 
-        $perPage = 2;
+        $perPage = 5;
 
         if($request->get('keyword')) {
             $posts->search($request->get('keyword'));

@@ -180,7 +180,7 @@ class CategoryController extends Controller
             $request->all(), 
             [
                 'title' => 'required|string|max:60',
-                'slug' => 'required|string|unique:categories,slug',
+                'slug' => 'required|string|unique:categories,slug,'.$category->id,
                 'thumbnail' => 'required',
                 'description' => 'required|string|max:240',
             ],
