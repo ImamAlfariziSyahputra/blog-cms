@@ -28,6 +28,7 @@ Route::get(
 
 Route::get('/', [BlogController::class, 'home'])->name('blog.home');
 Route::get('/categories', [BlogController::class, 'showCategories'])->name('blog.categories');
+Route::get('/tags', [BlogController::class, 'showTags'])->name('blog.tags');
 
 Auth::routes([
     'register' => false,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -24,6 +25,15 @@ class BlogController extends Controller
 
         return view('blog.categories', [
             'categories' => $categories,
+        ]);
+    }
+
+    public function showTags()
+    {
+        $tags = Tag::paginate($this->perPage);
+
+        return view('blog.tags', [
+            'tags' => $tags,
         ]);
     }
 }
