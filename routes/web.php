@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileManagerController;
@@ -25,9 +26,7 @@ Route::get(
     [LocalizationController::class, 'switchLang']
 )->name('localization.switch');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BlogController::class, 'home'])->name('blog.home');
 
 Auth::routes([
     'register' => false,
