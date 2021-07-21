@@ -19,12 +19,25 @@ class BlogController extends Controller
         ]);
     }
 
+    public function searchPosts(Request $request)
+    {
+        if(!$request->get('keyword')) {
+            return redirect()->route('blog.home');
+        }
+
+        $posts = Post::publish()->search($request->keyword)->paginate($this->perPage);
+
+        return view('blog.searchPost', [
+            'posts' => $posts->withQueryString(),
+        ]);
+    }
+
     public function showCategories()
     {
         $categories = Category::onlyParent()->paginate($this->perPage);
 
         return view('blog.categories', [
-            'categories' => $categories,
+            'categories' => $categories->withQueryString(),
         ]);
     }
 
@@ -33,7 +46,7 @@ class BlogController extends Controller
         $tags = Tag::paginate($this->perPage);
 
         return view('blog.tags', [
-            'tags' => $tags,
+            'tags' => $tags->withQueryString(),
         ]);
     }
 }

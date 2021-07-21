@@ -27,6 +27,7 @@ Route::get(
 )->name('localization.switch');
 
 Route::get('/', [BlogController::class, 'home'])->name('blog.home');
+Route::get('/search', [BlogController::class, 'searchPosts'])->name('blog.search');
 Route::get('/categories', [BlogController::class, 'showCategories'])->name('blog.categories');
 Route::get('/tags', [BlogController::class, 'showTags'])->name('blog.tags');
 
