@@ -49,4 +49,18 @@ class BlogController extends Controller
             'tags' => $tags->withQueryString(),
         ]);
     }
+
+    public function showPostsByCategory($slug)
+    {
+        $posts = Post::publish()->whereHas('category', function($query) use($slug) {
+            return $query->where('slug', $slug);
+        })->paginate($this->perPage);
+
+        $category = Category::where('slug', $slug)->first();
+
+        return view('blog.posts-category', [
+            'posts' => $posts,
+            'category' => $category,
+        ]);
+    }
 }
