@@ -58,17 +58,28 @@
         <!-- Categories list:start -->
         <div class="card mb-1">
             <h5 class="card-header">
-                Categories
+                {{ trans('blog.widget.categories') }}
             </h5>
             <div class="card-body">
                 <ul class="list-unstyled">
                     <li>
-                        <a href="">
-                            Category title
+                        {{-- if parent category selected --}}
+                        @if ($category->slug == $categoryRoot->slug)
+                        {{ $categoryRoot->title }}
+                        @else
+                        {{-- if sub category selected --}}
+                        <a href="{{ route('blog.posts.category', ['slug' => $categoryRoot->slug]) }}">
+                            {{ $categoryRoot->title }}
                         </a>
-                        <!-- category descendants:start -->
-
-                        <!-- category descendants:end -->
+                        @endif
+                        <!-- category herit:start -->
+                        @if ($categoryRoot->herit)
+                            @include('blog.sub-categories', [
+                                'categoryRoot' => $categoryRoot->herit,
+                                'category' => $category
+                            ])
+                        @endif
+                        <!-- category herit:end -->
                     </li>
                 </ul>
             </div>
