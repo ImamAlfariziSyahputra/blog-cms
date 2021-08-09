@@ -32,6 +32,19 @@ class BlogController extends Controller
         ]);
     }
 
+    public function postDetail($slug)
+    {
+        $post = Post::publish()->with(['category', 'tag'])->where('slug', $slug)->first();
+
+        if(!$post) {
+            return redirect()->route('blog.home');
+        }
+
+        return view('blog.post-detail', [
+            'post' => $post,
+        ]);
+    }
+
     public function showCategories()
     {
         $categories = Category::onlyParent()->paginate($this->perPage);
@@ -81,4 +94,6 @@ class BlogController extends Controller
             'tags' => $tags,
         ]);
     }
+
+
 }
