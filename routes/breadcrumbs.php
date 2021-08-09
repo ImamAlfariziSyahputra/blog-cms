@@ -46,6 +46,13 @@ Breadcrumbs::for('blogTags', function (BreadcrumbTrail $trail) {
     $trail->push('Tags', route('blog.tags'));
 });
 
+// Blog > Tags > [title]
+Breadcrumbs::for('blogPostsTag', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('blog');
+    $trail->push('Tags', route('blog.tags'));
+    $trail->push($tag->title, '#');
+});
+
 // ====================== dashboard =============================
 // Dashboard
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {

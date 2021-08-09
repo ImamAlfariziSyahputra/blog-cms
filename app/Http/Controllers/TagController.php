@@ -22,7 +22,7 @@ class TagController extends Controller
         $this->middleware('permission:tag_update', ['only' => ['edit', 'update']]);
         $this->middleware('permission:tag_delete', ['only' => 'destroy']);
     }
-    private $perPage  = 2;
+    private $perPage  = 5;
     /**
      * Display a listing of the resource.
      *
